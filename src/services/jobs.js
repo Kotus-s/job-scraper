@@ -5,13 +5,17 @@ const jobSchema = mongoose.Schema({
     company: String,
     link: String,
     source: String,
+    company_logo: String,
+    created_at: Date,
+    type: String,
+    location: String,
     discord_id: {
         type: String,
         default: null
     },
     deleted: {
         type: Boolean,
-        default: false,
+        default: false
     }
 })
 
@@ -19,7 +23,7 @@ export const Job = mongoose.model('Job', jobSchema);
 
 export async function connect(url) {
     return new Promise((success, failure) => {
-        mongoose.connect(`mongodb://${url}:27017/test`, {
+        mongoose.connect(`mongodb://${url}:27017/test?authSource=admin`, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
             useFindAndModify: false
@@ -29,7 +33,7 @@ export async function connect(url) {
     })
 }
 
-export async function createOrUpdateJob(args) {
+export async function createOrUpdateJob(provider, args) {
     return new Promise((success, failure) => {
         const filters = {title: args.title, source: args.source}
         Job.findOneAndUpdate(filters, args, {upsert: true, new: true, setDefaultsOnInsert: true}, function(err, job) {

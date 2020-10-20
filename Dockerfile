@@ -19,7 +19,7 @@ WORKDIR /src
 
 ADD package.json /src
 
-RUN npm i --silent
+RUN npm install -g nodemon && npm i --silent
 
 ADD . /src
 
