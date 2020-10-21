@@ -2,34 +2,36 @@ import puppeteer from 'puppeteer'
 import {getRandom} from 'random-useragent'
 
 export default async (provider) => {
-    const browser = await puppeteer.launch({
-        args: ['--no-sandbox', '--disable-setuid-sandbox'],
-        headless: true
+    return new Promise(async (success, failure) => {
+        const browser = await puppeteer.launch({
+            args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage', '--shm-size=3gb'],
+            headless: true
+        })
+
+        const page = await browser.newPage()
+
+        await page.setUserAgent(getRandom(function (ua) {
+            return parseFloat(ua.browserVersion) >= 60;
+        }));
+
+        await page.goto(provider.url, {waitUntil: 'networkidle2'})
+
+        await page.setViewport({
+            width: 1200,
+            height: 800
+        });
+
+        await autoScroll(page);
+
+        await page.screenshot({path: 'example.png'});
+
+        if (provider.parse && typeof provider.parse === 'function') {
+            success(await provider.parse(page).catch(failure))
+        }
+
+        await page.close()
+        await browser.close()
     })
-
-    const page = await browser.newPage()
-
-    await page.setUserAgent(getRandom(function (ua) {
-        return parseFloat(ua.browserVersion) >= 60;
-    }));
-
-    await page.goto(provider.url)
-
-    await page.setViewport({
-        width: 1200,
-        height: 800
-    });
-
-    await autoScroll(page);
-
-    let content = await page.content()
-
-    if (provider.parse && typeof provider.parse === 'function') {
-        content = await provider.parse(page)
-    }
-
-    await browser.close()
-
 }
 
 async function autoScroll(page){
