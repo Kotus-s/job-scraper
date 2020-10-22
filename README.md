@@ -1,4 +1,4 @@
-<p align="center"><h1>Job Scraper</h1></p>
+# Job Scraper
 
 ## 📣 About this respository
 
@@ -6,9 +6,8 @@ Job scraper is a simple application to scrap some job offer website and aggregat
 
 ## 🛡 Requirements
 
-Make sure you have installed [Node.js](https://nodejs.org/en/) (you will need **at least v12.0.0**) and [Git](https://git-scm.com/).
-
-Download [Docker Desktop](https://www.docker.com/products/docker-desktop) for Mac or Windows. [Docker Compose](https://docs.docker.com/compose) will be automatically installed. On Linux, make sure you have the latest version of [Compose](https://docs.docker.com/compose/install/). 
+* Make sure you have installed [Node.js](https://nodejs.org/en/) (you will need **at least v12.0.0**) and [Git](https://git-scm.com/).
+* Download [Docker Desktop](https://www.docker.com/products/docker-desktop) for Mac or Windows. [Docker Compose](https://docs.docker.com/compose) will be automatically installed. On Linux, make sure you have the latest version of [Compose](https://docs.docker.com/compose/install/). 
 
 ## ⚙ Installation
 
@@ -18,16 +17,10 @@ Clone this repository
 git clone https://github.com/Kotus-s/job-scraper.git
 ```
 
-Go to the application folder
+Go to the application folder and copy .env.sample to .env
 
 ```bash
-cd job-scraper
-```
-
-Copy the .env.sample to .env
-
-```bash
-cp .env.sample .env
+cd job-scraper && cp .env.sample .env
 ```
 
 ## ✏ Fill the .env
@@ -38,16 +31,14 @@ cp .env.sample .env
 * `DISCORD_TOKEN` token of your discord bot
 * `DISCORD_CHANNEL` channel id where all jobs will be published
 
-## 🐳 How to use docker-compose
+## 🐳 Docker usage
 
-Start the application
 ```bash
 docker-compose up -d --build # Build and up the stack
 ```
 
-Shutdown docker stack
 ```bash
-docker-compose down
+docker-compose down # Down the stack
 ```
 
 ## 📌 Current features and roadmap
@@ -62,4 +53,4 @@ docker-compose down
 
 ## 📄 License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+[MIT license](https://opensource.org/licenses/MIT).
